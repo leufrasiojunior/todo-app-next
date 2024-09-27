@@ -3,7 +3,7 @@ interface AuthHeaderProps {
   title: string;
 }
 
-const AuthHeader = ({ label, title }: AuthHeaderProps) => {
+const HeaderGeneral = ({ label, title }: AuthHeaderProps) => {
   return (
     <div className="w-full flex flex-col gap-y-4 items-center justify-center">
       <h1 className="text-3xl font-semibold">{title}</h1>
@@ -12,4 +12,4 @@ const AuthHeader = ({ label, title }: AuthHeaderProps) => {
   );
 };
 
-export default AuthHeader;
+export default HeaderGeneral;
