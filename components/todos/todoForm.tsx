@@ -1,14 +1,14 @@
 import { useState, FormEvent } from "react";
-import { Input } from "@/components/ui/input"; // Importa o Input do shadcn
-import { Button } from "@/components/ui/button"; // Importa o Button do shadcn
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"; // Importa o Select do shadcn
-import { Label } from "@/components/ui/label"; // Importa o Label do shadcn
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 import DocumentPlus from "../icons/document-plus";
 
 interface TodoFormProps {
@@ -26,7 +26,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
       return;
     }
     addTodo(value, category);
-    // Limpa os campos após o envio
+
     setValue("");
     setCategory("");
   };
@@ -35,7 +35,6 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
     <div className="mt-8">
       <h2 className="text-xl font-semibold mb-4">Criar Tarefa:</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Input para o título da tarefa */}
         <div>
           <Label htmlFor="task-title">Título da Tarefa</Label>
           <Input
@@ -47,8 +46,6 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
             className="w-full border-zinc-410 "
           />
         </div>
-
-        {/* Select para a categoria */}
         <div>
           <Label htmlFor="category">Categoria</Label>
           <Select value={category} onValueChange={setCategory}>
@@ -62,8 +59,6 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
             </SelectContent>
           </Select>
         </div>
-
-        {/* Botão de envio */}
         <Button type="submit" className="w-full gap-1">
           Criar Tarefa
           <DocumentPlus />

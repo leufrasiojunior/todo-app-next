@@ -6,9 +6,11 @@ import SearchTodo from "../../components/todos/searchTodo";
 import FilterTodos from "../../components/todos/filterTodos";
 import TodoForm from "../../components/todos/todoForm";
 import TodoActions from "@/components/todos/todo-actions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const TodoList = () => {
+  const router = useRouter();
   const [todos, setTodos] = useState([
     {
       id: 1,
@@ -24,6 +26,13 @@ const TodoList = () => {
     },
     { id: 3, text: "Estudar React", category: "Estudos", isCompleted: false },
   ]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/auth/login");
+    }
+  });
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
   const [sort, setSort] = useState("A-Z");

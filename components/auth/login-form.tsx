@@ -23,7 +23,7 @@ import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(""); // Estado para armazenar a mensagem de erro
+  const [errorMessage, setErrorMessage] = useState("");
   const { pending } = useFormStatus();
   const router = useRouter();
 
