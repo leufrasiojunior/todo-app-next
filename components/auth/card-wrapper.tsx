@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
-import AuthHeader from "./auth-header";
+import HeaderGeneral from "../general/headergeneral";
 import BackButton from "./back-button";
 
 interface CardWrapperProps {
@@ -22,7 +22,7 @@ const CardWrapper = ({
   return (
     <Card className="xl:w-1/4 md:w-1/2 shadow-md">
       <CardHeader>
-        <AuthHeader label={label} title={title} />
+        <HeaderGeneral label={label} title={title} />
       </CardHeader>
       <CardContent>{children}</CardContent>
       <CardFooter>
