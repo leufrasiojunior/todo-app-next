@@ -10,6 +10,9 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import DocumentPlus from "../icons/document-plus";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CreateTodo } from "@/schema";
 
 interface TodoFormProps {
   addTodo: (value: string, category: string) => void;
@@ -19,8 +22,18 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
   const [value, setValue] = useState<string>("");
   const [category, setCategory] = useState<string>("");
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(CreateTodo),
+    defaultValues: {
+      taskTitle: "",
+      category: "",
+    },
+  });
+
+  const onSubmit = () => {
     if (!value || !category) {
       alert("Nome da Tarefa ou categoria em branco!");
       return;
@@ -34,7 +47,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
   return (
     <div className="mt-8">
       <h2 className="text-xl font-semibold mb-4">Criar Tarefa:</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <Label htmlFor="task-title">Título da Tarefa</Label>
           <Input
@@ -43,8 +56,11 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
             placeholder="Digite o título"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="w-full border-zinc-410 "
+            className="w-full border-zinc-410"
           />
+          {errors.taskTitle && (
+            <span className="text-red-500">{errors.taskTitle.message}</span>
+          )}
         </div>
         <div>
           <Label htmlFor="category">Categoria</Label>
@@ -58,6 +74,9 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
               <SelectItem value="Estudos">Estudos</SelectItem>
             </SelectContent>
           </Select>
+          {errors.category && (
+            <span className="text-red-500">{errors.category.message}</span>
+          )}
         </div>
         <Button type="submit" className="w-full gap-1">
           Criar Tarefa

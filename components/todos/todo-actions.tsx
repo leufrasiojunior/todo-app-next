@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import CheckCircle from "../icons/check-circle";
 import XCircle from "../icons/x-circle";
+import CancelCircle from "../icons/cancel-circle";
 
 interface Todo {
   id: number;
@@ -32,8 +33,20 @@ const TodoActions: React.FC<TodoActionsProps> = ({
         <p className="text-sm text-gray-500">Categoria: {todo.category}</p>
       </div>
       <div className="flex space-x-4 justify-center">
-        <Button onClick={() => completeTodos(todo.id)} variant="outline">
-          <CheckCircle />
+        <Button
+          onClick={() => completeTodos(todo.id)}
+          variant="outline"
+          className={`${todo.isCompleted ? "bg-gray-100" : "bg-white"}`}
+        >
+          {todo.isCompleted ? (
+            <>
+              <CancelCircle /> <p>Marcar como Pendente</p>
+            </>
+          ) : (
+            <>
+              <CheckCircle /> <p>Marcar como Finalizada</p>
+            </>
+          )}
         </Button>
         <Button onClick={() => removeTodos(todo.id)} variant="destructive">
           <XCircle />
