@@ -7,13 +7,14 @@ interface SearchTodo {
 
 const SearchTodo = ({ search, setSearch }: SearchTodo) => {
   return (
-    <div className="search">
+    <div className="mb-4">
       <h2>Pesquisar:</h2>
       <Input
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Digite para Pesquisar..."
+        className="w-full"
       />
     </div>
   );
