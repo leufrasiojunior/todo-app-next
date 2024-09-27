@@ -1,22 +1,44 @@
+// todo-actions.tsx
 import React from "react";
+import { Button } from "../ui/button";
+import CheckCircle from "../icons/check-circle";
+import XCircle from "../icons/x-circle";
 
-const TodoActions = ({ todo, removeTodos, completeTodos }) => {
+interface Todo {
+  id: number;
+  text: string;
+  category: string;
+  isCompleted: boolean;
+}
+
+interface TodoActionsProps {
+  todo: Todo;
+  removeTodos: (id: number) => void;
+  completeTodos: (id: number) => void;
+}
+
+const TodoActions: React.FC<TodoActionsProps> = ({
+  todo,
+  removeTodos,
+  completeTodos,
+}) => {
   return (
     <div
-      className="todo"
-      style={{ textDecoration: todo.isCompleted ? "Line-through" : "" }}
+      className={`p-4 mb-4 border rounded-lg shadow-md ${
+        todo.isCompleted ? "line-through bg-gray-100" : "bg-white"
+      }`}
     >
-      <div className="content">
-        <p>{todo.text}</p>
-        <p className="category">({todo.category})</p>
+      <div className="mb-2 text-center">
+        <p className="text-lg font-semibold text-center">{todo.text}</p>
+        <p className="text-sm text-gray-500">Categoria: {todo.category}</p>
       </div>
-      <div>
-        <button className="complete" onClick={() => completeTodos(todo.id)}>
-          Completar Tarefa
-        </button>
-        <button className="remove" onClick={() => removeTodos(todo.id)}>
-          x
-        </button>
+      <div className="flex space-x-4 justify-center">
+        <Button onClick={() => completeTodos(todo.id)} variant="outline">
+          <CheckCircle />
+        </Button>
+        <Button onClick={() => removeTodos(todo.id)} variant="destructive">
+          <XCircle />
+        </Button>
       </div>
     </div>
   );

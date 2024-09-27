@@ -75,6 +75,7 @@ const LoginForm = () => {
                       {...field}
                       type="email"
                       placeholder="example@example.com"
+                      className="border-zinc-400"
                     />
                   </FormControl>
                   <FormMessage />
@@ -89,7 +90,12 @@ const LoginForm = () => {
                 <FormItem>
                   <FormLabel>Senha</FormLabel>
                   <FormControl>
-                    <Input {...field} type="password" placeholder="******" />
+                    <Input
+                      {...field}
+                      type="password"
+                      placeholder="******"
+                      className="border-zinc-400"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

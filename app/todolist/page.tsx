@@ -1,24 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import TodoActions from "@/components/todos/todo-actions";
-import TodoForm from "../../components/todos/todoForm";
-import SearchTodo from "../../components/todos/searchTodo";
-import FilterTodos from "../../components/todos/filterTodos";
 import { Card } from "@/components/ui/card";
 import HeaderGeneral from "@/components/general/headergeneral";
 import { Separator } from "@/components/ui/separator";
+import SearchTodo from "../../components/todos/searchTodo";
+import FilterTodos from "../../components/todos/filterTodos";
+import TodoForm from "../../components/todos/todoForm";
+import TodoActions from "@/components/todos/todo-actions";
+import { useState } from "react";
 
 const TodoList = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      router.push("/auth/login");
-    }
-  });
-
   const [todos, setTodos] = useState([
     {
       id: 1,
@@ -32,18 +22,13 @@ const TodoList = () => {
       category: "Pessoal",
       isCompleted: false,
     },
-    {
-      id: 3,
-      text: "Estudar React",
-      category: "Estudos",
-      isCompleted: false,
-    },
+    { id: 3, text: "Estudar React", category: "Estudos", isCompleted: false },
   ]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
   const [sort, setSort] = useState("A-Z");
 
-  const addTodo = (text, category) => {
+  const addTodo = (text: string, category: string) => {
     const newTodos = [
       ...todos,
       {
@@ -57,34 +42,30 @@ const TodoList = () => {
   };
 
   const removeTodos = (id: number) => {
-    const newTodos = [...todos];
-    const filteredTodos = newTodos.filter((todo) =>
-      todo.id !== id ? todo : null
-    );
+    const filteredTodos = todos.filter((todo) => todo.id !== id);
     setTodos(filteredTodos);
   };
 
   const completeTodos = (id: number) => {
-    const newTodos = [...todos];
-    newTodos.map((todo) =>
-      todo.id === id ? (todo.isCompleted = !todo.isCompleted) : todo
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
     );
-    setTodos(newTodos);
+    setTodos(updatedTodos);
   };
 
   return (
-    <Card className="mx-auto p-5">
+    <Card
+      className="max-w-xl p-5 space-y-6 my-auto bg-stone-50"
+      style={{ width: "150rem" }}
+    >
       <HeaderGeneral
         label="Acompanhe as suas tarefas."
         title="Lista de tarefas"
       />
-      <Separator />
-
       <SearchTodo search={search} setSearch={setSearch} />
-
       <Separator />
       <FilterTodos filter={filter} setFilter={setFilter} setSort={setSort} />
-      <div className="todo-list">
+      <div className="space-y-4 flex flex-col justify-center">
         {todos
           .filter((todo) =>
             filter === "All"

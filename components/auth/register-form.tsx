@@ -59,6 +59,7 @@ const RegisterForm = () => {
                       {...field}
                       type="email"
                       placeholder="example@example.com"
+                      className="border-zinc-400"
                     />
                   </FormControl>
                   <FormMessage />
@@ -73,7 +74,11 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Nome</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="Seu nome" />
+                    <Input
+                      {...field}
+                      placeholder="Seu nome"
+                      className="border-zinc-400"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -87,7 +92,12 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Senha</FormLabel>
                   <FormControl>
-                    <Input {...field} type="password" placeholder="******" />
+                    <Input
+                      {...field}
+                      type="password"
+                      placeholder="******"
+                      className="border-zinc-400"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -101,7 +111,12 @@ const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Confirmar a senha</FormLabel>
                   <FormControl>
-                    <Input {...field} type="password" placeholder="******" />
+                    <Input
+                      {...field}
+                      type="password"
+                      placeholder="******"
+                      className="border-zinc-400"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

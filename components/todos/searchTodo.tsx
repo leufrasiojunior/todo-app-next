@@ -14,7 +14,7 @@ const SearchTodo = ({ search, setSearch }: SearchTodo) => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Digite para Pesquisar..."
-        className="w-full"
+        className="w-full border-zinc-410"
       />
     </div>
   );
