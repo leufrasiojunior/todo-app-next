@@ -64,7 +64,7 @@ const TodoList = () => {
 
   return (
     <Card
-      className="max-w-xl p-5 space-y-6 my-auto bg-stone-50"
+      className="max-w-xl p-5 space-y-6 my-auto bg-stone-50 "
       style={{ width: "150rem" }}
     >
       <HeaderGeneral
