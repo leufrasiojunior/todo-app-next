@@ -27,7 +27,7 @@ interface TodoFormProps {
 const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
   const [newCategory, setNewCategory] = useState<string>("");
   const [categories, setCategories] = useState(categoriesJSON);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [, setSelectedCategory] = useState<string>("");
 
   const {
     register,
