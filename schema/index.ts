@@ -15,5 +15,14 @@ export const LoginSchema = z.object({
 
 export const CreateTodo = z.object({
     taskTitle: z.string().min(1, "O título da tarefa é obrigatório."),
-    category: z.string().min(1, "A categoria é obrigatória."),
-  });
+    category: z
+      .string()
+      .optional(),
+    newCategory: z.string().optional(),
+  }).refine(
+    (data) => data.category || data.newCategory,
+    {
+      message: "Você deve digitar uma nova categoria ou selecionar uma existente.",
+      path: ["category"],
+    }
+  );

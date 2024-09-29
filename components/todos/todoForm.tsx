@@ -14,34 +14,69 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTodo } from "@/schema";
 
+// Simulação de categorias a partir de um JSON
+const categoriesJSON = [
+  { id: 1, name: "Trabalho" },
+  { id: 2, name: "Pessoal" },
+  { id: 3, name: "Estudos" },
+];
+
 interface TodoFormProps {
   addTodo: (value: string, category: string) => void;
 }
 
 const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
-  const [value, setValue] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
+  const [newCategory, setNewCategory] = useState<string>("");
+  const [categories, setCategories] = useState(categoriesJSON); // Estado que contém as categorias
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   const {
+    register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(CreateTodo),
     defaultValues: {
       taskTitle: "",
       category: "",
+      newCategory: "",
     },
   });
 
-  const onSubmit = () => {
-    if (!value || !category) {
-      alert("Nome da Tarefa ou categoria em branco!");
-      return;
-    }
-    addTodo(value, category);
+  const onSubmit = (data: {
+    taskTitle: string;
+    category: string;
+    newCategory: string;
+  }) => {
+    const categoryToUse = data.newCategory || data.category;
 
-    setValue("");
-    setCategory("");
+    // Adicionar a nova categoria ao estado se ela não estiver na lista
+    if (newCategory && !categories.find((cat) => cat.name === newCategory)) {
+      const newCategoryObj = {
+        id: categories.length + 1, // Gerar um novo ID para a categoria
+        name: newCategory,
+      };
+      setCategories((prevCategories) => [...prevCategories, newCategoryObj]); // Adicionar a nova categoria
+    }
+
+    addTodo(data.taskTitle, categoryToUse);
+
+    // Limpar os campos após submeter o formulário
+    setNewCategory("");
+    setSelectedCategory("");
+    setValue("newCategory", "");
+    setValue("category", "");
+  };
+
+  const handleNewCategory = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewCategory(event.target.value);
+    setValue("newCategory", event.target.value); // Atualiza o valor de newCategory no form
+  };
+
+  const handleCategorySelect = (value: string) => {
+    setSelectedCategory(value);
+    setValue("category", value); // Atualiza o valor de category no form
   };
 
   return (
@@ -54,30 +89,46 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
             id="task-title"
             type="text"
             placeholder="Digite o título"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+            {...register("taskTitle")}
             className="w-full border-zinc-410"
           />
           {errors.taskTitle && (
             <span className="text-red-500">{errors.taskTitle.message}</span>
           )}
         </div>
+
         <div>
           <Label htmlFor="category">Categoria</Label>
-          <Select value={category} onValueChange={setCategory}>
-            <SelectTrigger id="category" className="w-full">
-              <SelectValue placeholder="Selecione uma Categoria" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Trabalho">Trabalho</SelectItem>
-              <SelectItem value="Pessoal">Pessoal</SelectItem>
-              <SelectItem value="Estudos">Estudos</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="flex flex-col gap-2">
+            {/* Input para adicionar nova categoria */}
+            <Input
+              id="new-category"
+              type="text"
+              placeholder="Digite uma nova categoria"
+              value={newCategory}
+              onChange={handleNewCategory}
+              className="w-full border-zinc-410"
+            />
+
+            {/* Select para categorias existentes */}
+            <Select onValueChange={handleCategorySelect}>
+              <SelectTrigger id="category" className="w-full">
+                <SelectValue placeholder="Selecione uma Categoria" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((category) => (
+                  <SelectItem key={category.id} value={category.name}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           {errors.category && (
             <span className="text-red-500">{errors.category.message}</span>
           )}
         </div>
+
         <Button type="submit" className="w-full gap-1">
           Criar Tarefa
           <DocumentPlus />
