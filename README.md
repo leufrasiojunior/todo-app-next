@@ -8,6 +8,8 @@
 
 ## Como utilizar:
 
+O projeto está hospedado temporariamente na vercel: https://todo-app-next-gules.vercel.app/
+
 Utilize o git para clonar o repositótio:
 
     git clone https://github.com/leufrasiojunior/todo-app-next.git
