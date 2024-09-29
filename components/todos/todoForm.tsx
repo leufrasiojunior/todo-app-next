@@ -57,7 +57,9 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
       };
       setCategories((prevCategories) => [...prevCategories, newCategoryObj]);
     }
+
     addTodo(data.taskTitle, categoryToUse);
+
     setNewCategory("");
     setSelectedCategory("");
     setValue("newCategory", "");
@@ -103,6 +105,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
               onChange={handleNewCategory}
               className="w-full border-zinc-410"
             />
+
             <Select onValueChange={handleCategorySelect}>
               <SelectTrigger id="category" className="w-full">
                 <SelectValue placeholder="Selecione uma Categoria" />
