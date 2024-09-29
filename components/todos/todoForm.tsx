@@ -14,7 +14,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTodo } from "@/schema";
 
-// Simulação de categorias a partir de um JSON
 const categoriesJSON = [
   { id: 1, name: "Trabalho" },
   { id: 2, name: "Pessoal" },
@@ -27,7 +26,7 @@ interface TodoFormProps {
 
 const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
   const [newCategory, setNewCategory] = useState<string>("");
-  const [categories, setCategories] = useState(categoriesJSON); // Estado que contém as categorias
+  const [categories, setCategories] = useState(categoriesJSON);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   const {
@@ -51,18 +50,14 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
   }) => {
     const categoryToUse = data.newCategory || data.category;
 
-    // Adicionar a nova categoria ao estado se ela não estiver na lista
     if (newCategory && !categories.find((cat) => cat.name === newCategory)) {
       const newCategoryObj = {
-        id: categories.length + 1, // Gerar um novo ID para a categoria
+        id: categories.length + 1,
         name: newCategory,
       };
-      setCategories((prevCategories) => [...prevCategories, newCategoryObj]); // Adicionar a nova categoria
+      setCategories((prevCategories) => [...prevCategories, newCategoryObj]);
     }
-
     addTodo(data.taskTitle, categoryToUse);
-
-    // Limpar os campos após submeter o formulário
     setNewCategory("");
     setSelectedCategory("");
     setValue("newCategory", "");
@@ -71,12 +66,12 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
 
   const handleNewCategory = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewCategory(event.target.value);
-    setValue("newCategory", event.target.value); // Atualiza o valor de newCategory no form
+    setValue("newCategory", event.target.value);
   };
 
   const handleCategorySelect = (value: string) => {
     setSelectedCategory(value);
-    setValue("category", value); // Atualiza o valor de category no form
+    setValue("category", value);
   };
 
   return (
@@ -100,7 +95,6 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
         <div>
           <Label htmlFor="category">Categoria</Label>
           <div className="flex flex-col gap-2">
-            {/* Input para adicionar nova categoria */}
             <Input
               id="new-category"
               type="text"
@@ -109,8 +103,6 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
               onChange={handleNewCategory}
               className="w-full border-zinc-410"
             />
-
-            {/* Select para categorias existentes */}
             <Select onValueChange={handleCategorySelect}>
               <SelectTrigger id="category" className="w-full">
                 <SelectValue placeholder="Selecione uma Categoria" />
